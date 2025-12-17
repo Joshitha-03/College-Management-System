@@ -1,5 +1,5 @@
 const adminDetails = require("./models/details/admin-details.model");
-const connectToMongo = require("./database/db");
+const connectToMongo = require("./Database/db");
 const mongoose = require("mongoose");
 
 const seedData = async () => {
@@ -14,18 +14,18 @@ const seedData = async () => {
 
     const adminDetail = {
       employeeId: employeeId,
-      firstName: "Sundar",
-      middleName: "R",
-      lastName: "Pichai",
+      firstName: "Joshitha",
+      middleName: ".",
+      lastName: "Kuniganti",
       email: "admin@gmail.com",
       phone: "1234567890",
-      profile: "Faculty_Profile_123456.jpg",
+      profile: "1753697436537.png",
       address: "123 College Street",
       city: "College City",
       state: "State",
       pincode: "123456",
       country: "India",
-      gender: "male",
+      gender: "Female",
       dob: new Date("1990-01-01"),
       designation: "System Administrator",
       joiningDate: new Date(),
