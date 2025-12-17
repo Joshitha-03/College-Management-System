@@ -5,13 +5,15 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const cors = require("cors");
+const fs = require("fs");
 
+// 🔹 Connect MongoDB
 connectToMongo();
 
-// ✅ CORRECT PORT
+// 🔹 Port (Render provides PORT automatically)
 const port = process.env.PORT || 4000;
 
-// ✅ TEMPORARY OPEN CORS (lock later)
+// 🔹 TEMPORARY OPEN CORS (OK for now)
 app.use(
   cors({
     origin: true,
@@ -21,14 +23,22 @@ app.use(
 
 app.use(express.json());
 
-// Health check
+// 🔹 CREATE media FOLDER IF NOT EXISTS (🔥 FIX)
+const mediaPath = path.join(__dirname, "media");
+
+if (!fs.existsSync(mediaPath)) {
+  fs.mkdirSync(mediaPath);
+}
+
+// 🔹 Serve media files
+app.use("/media", express.static(mediaPath));
+
+// 🔹 Health check
 app.get("/", (req, res) => {
   res.send("Hello 👋 Backend is Working Fine 🚀");
 });
 
-app.use("/media", express.static(path.join(__dirname, "media")));
-
-// Routes
+// 🔹 Routes
 app.use("/api/admin", require("./routes/details/admin-details.route"));
 app.use("/api/faculty", require("./routes/details/faculty-details.route"));
 app.use("/api/student", require("./routes/details/student-details.route"));
@@ -41,6 +51,7 @@ app.use("/api/material", require("./routes/material.route"));
 app.use("/api/exam", require("./routes/exam.route"));
 app.use("/api/marks", require("./routes/marks.route"));
 
+// 🔹 Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
